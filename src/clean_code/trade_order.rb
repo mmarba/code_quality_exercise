@@ -1,5 +1,5 @@
 #
-# This class contains the definition of the trade orders
+# TradeOrder class definition
 #
 
 class TradeOrder

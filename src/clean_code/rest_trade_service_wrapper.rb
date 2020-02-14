@@ -1,6 +1,6 @@
 #
-# This class is a wrapper that contains all the details of the 
-# trade service available via REST
+# This class is a wrapper that contains encapsulates the implementation
+# of the access to a REST trade service
 #
 
 require 'httparty'
