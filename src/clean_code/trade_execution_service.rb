@@ -9,14 +9,13 @@ require_relative 'trade_order.rb'
 class TradeExecutionService
     
   def initialize
-    @liquidity_provider_routing_service = LiquidityProviderRoutingService.new()
   end
 
   def execute_order(side, size, currency, counter_currency, date, price, order_id)
 
     trade_order = TradeOrder.new(side, size, currency, counter_currency, date, price, order_id)
 
-    liquidity_provider = @liquidity_provider_routing_service.determine_liquidity_provider(trade_order)
+    liquidity_provider = LiquidityProviderRoutingService.determine_liquidity_provider(trade_order)
 
     liquidity_provider.issue_market_trade(trade_order);
   

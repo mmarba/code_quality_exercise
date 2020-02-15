@@ -13,7 +13,7 @@ class LiquidityProviderRoutingService
     end
     
     # applies business rules to determine proper liquidity provider for given order
-    def determine_liquidity_provider(order)
+    def self.determine_liquidity_provider(order)
         amount = amount_in_usd(order.size, order.currency)
         if amount < 10_000
             liquidity_provider = LiquidityProviderC.new()
@@ -24,7 +24,7 @@ class LiquidityProviderRoutingService
           end
     end
 
-    def amount_in_usd(size, currency)
+    def self.amount_in_usd(size, currency)
         if currency == 'USD'
             return size
         else
