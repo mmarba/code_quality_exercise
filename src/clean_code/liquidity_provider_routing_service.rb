@@ -3,9 +3,8 @@
 # based on some business rules.
 #
 
-require_relative 'trade_order.rb'
 require_relative 'liquidity_provider.rb'
-require 'money'
+require_relative 'money_helper.rb'
 
 class LiquidityProviderRoutingService
 
@@ -14,22 +13,13 @@ class LiquidityProviderRoutingService
     
     # applies business rules to determine proper liquidity provider for given order
     def self.determine_liquidity_provider(order)
-        amount = amount_in_usd(order.size, order.currency)
-        if amount < 10_000
+        amount = MoneyHelper.amount_in_usd(order.size, order.currency)
+        if amount < 10_000.to_money(USD)
             liquidity_provider = LiquidityProviderC.new()
-          elsif (amount >= 10_000 && amount < 100_000)
+          elsif (amount >= 10_000.to_money(USD) && amount < 100_000.to_money(USD))
             liquidity_provider = LiquidityProviderB.new()
           else
             liquidity_provider = LiquidityProviderA.new()
           end
-    end
-
-    def self.amount_in_usd(size, currency)
-        if currency == 'USD'
-            return size
-        else
-            # this is just to cover the case where the currency is not USD
-            return (size * 2)
-        end
     end
 end

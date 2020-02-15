@@ -2,7 +2,7 @@
 # This file defines the behavior of all liquidity providers (as in an interface) plus specific
 # implementations of this behavior for the different types of providers
 #
-require_relative 'trade_order.rb'
+
 require_relative 'rest_trade_service_wrapper'
 require_relative 'fix_trade_service_wrapper'
 
