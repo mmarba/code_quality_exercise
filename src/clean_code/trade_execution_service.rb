@@ -10,14 +10,15 @@ require_relative 'error_logger.rb'
 
 class TradeExecutionService
     
-  def self.initialize
+  def initialize(rest_trade_service, fix_trade_service)
+    @routing_service = LiquidityProviderRoutingService.new(rest_trade_service, fix_trade_service)
   end
 
-  def self.execute_order(side, size, currency, counter_currency, date, price, order_id)
+  def execute_order(side, size, currency, counter_currency, date, price, order_id)
 
     trade_order = TradeOrder.new(side, size, currency, counter_currency, date, price, order_id)
 
-    liquidity_provider = LiquidityProviderRoutingService.determine_liquidity_provider(trade_order)
+    liquidity_provider = @routing_service.determine_liquidity_provider(trade_order)
 
     liquidity_provider.issue_market_trade(trade_order);
   

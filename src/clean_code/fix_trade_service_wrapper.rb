@@ -17,3 +17,17 @@ class FIXTradeServiceWrapper
     end
 
 end
+
+class MockedFIXTradeServiceWrapper < FIXTradeServiceWrapper
+    def send_to_redis(queue, command, payload = nil)
+        # stub that will be called when this object is provided 
+        # as a mock fix trade service for testing purposes
+        if queue == :lp_acme_provider_queue
+            888
+        elsif queue == :lp_wall_street_provider_queue
+            999
+        else
+            000
+        end
+    end
+end
