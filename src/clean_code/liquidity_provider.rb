@@ -18,11 +18,9 @@ end
 
 # liquidity provider C uses a REST service to execute the trade order
 class LiquidityProviderC < LiquidityProvider
-    
-    REST_TRADER_SERVICE_URL = 'http://lp_c_host/trade'
 
-    def initialize()
-        @rest_trade_service = RESTTradeServiceWrapper.new(REST_TRADER_SERVICE_URL)
+    def initialize(rest_trade_service)
+        @rest_trade_service = rest_trade_service
     end
 
     def issue_market_trade(order)
@@ -40,7 +38,9 @@ class LiquidityProviderC < LiquidityProvider
 
           response = @rest_trade_service.post_trade_request(json_payload)
 
-          if response.code.to_i == 200
+          if response == nil
+            raise 'REST trade service did not respond.'
+          elsif response.code.to_i == 200
             handle_rest_trade_confirmation(response)
           else
             raise 'REST order execution failed.'
@@ -55,10 +55,8 @@ end
 # definition of liquidity providers based on the FIX protocol
 class LiquidityProviderFix < LiquidityProvider
 
-    REDIS_HOST_URL = 'redis://localhost/'
-
-    def initialize()
-        @fix_trade_service = FIXTradeServiceWrapper.new(REDIS_HOST_URL)
+    def initialize(fix_trade_service)
+        @fix_trade_service = fix_trade_service
     end
 
     def issue_market_trade(order)
