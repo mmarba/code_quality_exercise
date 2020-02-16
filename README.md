@@ -46,7 +46,7 @@ The code in TradeExecutionService has been decomposed in several specialized cla
 
 The required tests have been written at two levels:
 
-- File liquidity_provider_routing_service_spec.rb specified the tests of the class LiquidityProviderRoutingService, that verify that this provider returns the expected liquidity provider given an order. These tests are strictly speaking not unit tests (external dependencies are not replaced) but do not test the whole workflow of trading an order.
+- File liquidity_provider_routing_service_spec.rb specifies the tests of the class LiquidityProviderRoutingService, that verify that this provider returns the expected liquidity provider given an order. These tests are strictly speaking not unit tests (external dependencies are not replaced) but do not test the whole workflow of trading an order.
 
 - Higher level, wider scope tests are specified in file trade_execution_service_spec.rb. The whole workflow of executing an order is performed for the different test scenarios.  The call to the REST or FIX external services is mocked using Rspec instance_doubles, that allow checking that for each order the correct REST (liquidity provider C) or FIX services are called. For the providers based in FIX (LP A or B), we can check that the correct provider is used by verifying that the FIX service is called with the parameters corresponding to one or the other.
 
